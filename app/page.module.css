@@ -1,0 +1,62 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--muted) 0%, var(--background) 100%);
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.heroContent {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.heroAccent {
+  color: var(--accent);
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  opacity: 0.65;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.section {
+  margin-bottom: 3.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.albumGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}

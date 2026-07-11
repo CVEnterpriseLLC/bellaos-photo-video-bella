@@ -1,0 +1,27 @@
+.footer {
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  padding: 2rem 1.5rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.text {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  opacity: 0.6;
+}
+
+.sub {
+  font-size: 0.8rem;
+  color: var(--foreground);
+  opacity: 0.4;
+}

@@ -19,3 +19,14 @@ pnpm build
 ```
 
 See [docs/SPRINT_1_BELLAOS_CORE.md](docs/SPRINT_1_BELLAOS_CORE.md) for the security model and deployment checklist.
+
+## Supabase Auth configuration
+
+- Site URL: `https://bellaos-photo-video-bella.vercel.app`
+- Redirect URLs:
+  - `http://localhost:3000/**`
+  - `https://*-cve-nterprise-llc.vercel.app/**`
+- Invite email template action URL:
+  - `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next=/update-password`
+
+Invited users verify the one-time token on the server, create their password, and are then redirected to the protected dashboard.

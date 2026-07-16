@@ -22,11 +22,19 @@ See [docs/SPRINT_1_BELLAOS_CORE.md](docs/SPRINT_1_BELLAOS_CORE.md) for the secur
 
 ## Supabase Auth configuration
 
-- Site URL: `https://bellaos-photo-video-bella.vercel.app`
+- Site URL with the default Supabase invite template:
+  - `https://bellaos-photo-video-bella.vercel.app/auth/implicit?next=/update-password`
 - Redirect URLs:
   - `http://localhost:3000/**`
   - `https://*-cve-nterprise-llc.vercel.app/**`
 - Invite email template action URL:
   - `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next=/update-password`
 
-Invited users verify the one-time token on the server, create their password, and are then redirected to the protected dashboard.
+Invited users establish a verified session, create their password, and are then
+redirected to the protected dashboard.
+
+When custom SMTP is not configured, Supabase's default invitation template uses
+`{{ .ConfirmationURL }}` and redirects with an implicit session fragment. The
+`/auth/implicit` client route exchanges that fragment into the same cookie-based
+session used by the protected server routes. With custom SMTP, the token-hash
+`/auth/confirm` route remains the preferred SSR flow.

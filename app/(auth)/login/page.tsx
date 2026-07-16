@@ -13,6 +13,7 @@ type LoginPageProps = {
 const errorMessages: Record<string, string> = {
   invalid_input: "Escribe un correo válido y una contraseña de 8 caracteres o más.",
   invalid_credentials: "El correo o la contraseña no son correctos.",
+  invalid_invitation: "La invitación no es válida o ya expiró. Solicita una nueva.",
   configuration: "La conexión con Supabase todavía no está configurada.",
 };
 

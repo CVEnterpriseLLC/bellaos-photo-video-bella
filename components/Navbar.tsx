@@ -11,6 +11,11 @@ export default function Navbar() {
         </Link>
         <ul className={styles.links}>
           <li>
+            <Link href="/dashboard" className={styles.link}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
             <Link href="/" className={styles.link}>
               Home
             </Link>

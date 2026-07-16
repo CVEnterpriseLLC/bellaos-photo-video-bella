@@ -1,0 +1,170 @@
+.page {
+  min-height: 100vh;
+  padding: 2rem clamp(1rem, 4vw, 4rem) 4rem;
+  background: #f6f3ed;
+  color: #181612;
+}
+
+.header,
+.hero,
+.grid,
+.alert,
+.foundation {
+  width: min(100%, 76rem);
+  margin-inline: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header p,
+.hero > p,
+.card span,
+.alert span {
+  color: #6f685d;
+}
+
+.brand {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.brand span,
+.eyebrow {
+  color: #9b712f;
+}
+
+.signOut {
+  padding: 0.65rem 1rem;
+  border: 1px solid #cfc6b8;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.signOut:focus-visible,
+.brand:focus-visible {
+  outline: 3px solid rgba(155, 113, 47, 0.4);
+  outline-offset: 3px;
+}
+
+.hero {
+  padding: 6rem 0 2.5rem;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 50rem;
+  margin-top: 0.5rem;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.hero > p:last-child {
+  max-width: 42rem;
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+}
+
+.alert {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid #dfc99e;
+  border-radius: 0.9rem;
+  background: #fff8e9;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: grid;
+  gap: 1rem;
+  min-height: 9rem;
+  padding: 1.25rem;
+  border: 1px solid #ddd5c8;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.card strong {
+  align-self: end;
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.foundation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 1rem;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  background: #1b1916;
+  color: #fff;
+}
+
+.foundation h2 {
+  margin-top: 0.45rem;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.foundation ul {
+  display: grid;
+  gap: 0.65rem;
+  padding-left: 1.1rem;
+  color: #d8d1c5;
+}
+
+@media (max-width: 54rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .foundation {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 34rem) {
+  .page {
+    padding-inline: 1rem;
+  }
+
+  .hero {
+    padding-top: 4rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .foundation {
+    padding: 1.5rem;
+  }
+}

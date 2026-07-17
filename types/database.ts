@@ -54,7 +54,9 @@ export type Database = {
       }
       clients: {
         Row: {
-          brand_id: string | null
+          address: string | null
+          brand_id: string
+          city: string | null
           created_at: string | null
           email: string | null
           event_date: string | null
@@ -62,11 +64,17 @@ export type Database = {
           first_name: string
           id: string
           last_name: string | null
+          notes: string | null
           phone: string | null
+          preferred_language: string
+          referred_by: string | null
           status: string | null
+          updated_at: string
         }
         Insert: {
-          brand_id?: string | null
+          address?: string | null
+          brand_id: string
+          city?: string | null
           created_at?: string | null
           email?: string | null
           event_date?: string | null
@@ -74,11 +82,17 @@ export type Database = {
           first_name: string
           id?: string
           last_name?: string | null
+          notes?: string | null
           phone?: string | null
+          preferred_language?: string
+          referred_by?: string | null
           status?: string | null
+          updated_at?: string
         }
         Update: {
-          brand_id?: string | null
+          address?: string | null
+          brand_id?: string
+          city?: string | null
           created_at?: string | null
           email?: string | null
           event_date?: string | null
@@ -86,8 +100,12 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string | null
+          notes?: string | null
           phone?: string | null
+          preferred_language?: string
+          referred_by?: string | null
           status?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -125,6 +143,72 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      events: {
+        Row: {
+          brand_id: string
+          city: string | null
+          client_id: string
+          created_at: string
+          event_date: string
+          event_type: string
+          id: string
+          notes: string | null
+          package_name: string | null
+          start_time: string | null
+          status: string
+          title: string | null
+          updated_at: string
+          venue: string | null
+        }
+        Insert: {
+          brand_id: string
+          city?: string | null
+          client_id: string
+          created_at?: string
+          event_date: string
+          event_type: string
+          id?: string
+          notes?: string | null
+          package_name?: string | null
+          start_time?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          venue?: string | null
+        }
+        Update: {
+          brand_id?: string
+          city?: string | null
+          client_id?: string
+          created_at?: string
+          event_date?: string
+          event_type?: string
+          id?: string
+          notes?: string | null
+          package_name?: string | null
+          start_time?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          venue?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -336,4 +420,3 @@ export const Constants = {
     Enums: {},
   },
 } as const
-

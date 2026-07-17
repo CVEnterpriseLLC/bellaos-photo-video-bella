@@ -19,6 +19,7 @@ pnpm build
 ```
 
 See [docs/SPRINT_1_BELLAOS_CORE.md](docs/SPRINT_1_BELLAOS_CORE.md) for the security model and deployment checklist.
+See [docs/SPRINT_2_CRM.md](docs/SPRINT_2_CRM.md) for the Clients and Events model, RLS rules, and verification record.
 
 ## Supabase Auth configuration
 

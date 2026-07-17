@@ -21,6 +21,23 @@
   gap: 1rem;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.navLink {
+  padding: 0.62rem 0.9rem;
+  border: 1px solid #d9d0c2;
+  border-radius: 0.65rem;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .header p,
 .hero > p,
 .card span,
@@ -54,7 +71,8 @@
 }
 
 .signOut:focus-visible,
-.brand:focus-visible {
+.brand:focus-visible,
+.navLink:focus-visible {
   outline: 3px solid rgba(155, 113, 47, 0.4);
   outline-offset: 3px;
 }
@@ -96,7 +114,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -140,6 +158,12 @@
   color: #d8d1c5;
 }
 
+@media (max-width: 68rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 54rem) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -158,6 +182,11 @@
 
   .hero {
     padding-top: 4rem;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .grid {

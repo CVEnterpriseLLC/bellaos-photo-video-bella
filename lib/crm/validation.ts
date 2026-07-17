@@ -3,10 +3,15 @@ export type ClientInput = {
   lastName: string | null;
   email: string | null;
   phone: string | null;
+  address: string | null;
   city: string | null;
   preferredLanguage: "es" | "en";
   referredBy: string | null;
   notes: string | null;
+};
+
+export type ClientUpdateInput = ClientInput & {
+  status: "lead" | "active" | "past" | "archived";
 };
 
 export type EventInput = {
@@ -55,11 +60,28 @@ export function parseClientInput(formData: FormData): ParseResult<ClientInput> {
       lastName: optionalText(formData, "lastName"),
       email,
       phone: optionalText(formData, "phone"),
+      address: optionalText(formData, "address"),
       city: optionalText(formData, "city"),
       preferredLanguage,
       referredBy: optionalText(formData, "referredBy"),
       notes: optionalText(formData, "notes"),
     },
+  };
+}
+
+export function parseClientUpdateInput(formData: FormData): ParseResult<ClientUpdateInput> {
+  const client = parseClientInput(formData);
+  if (!client.success) return client;
+
+  const status = String(formData.get("status") ?? "lead");
+  const validStatuses = ["lead", "active", "past", "archived"] as const;
+  if (!validStatuses.includes(status as (typeof validStatuses)[number])) {
+    return { success: false, message: "El estado seleccionado no es válido." };
+  }
+
+  return {
+    success: true,
+    data: { ...client.data, status: status as ClientUpdateInput["status"] },
   };
 }
 

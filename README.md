@@ -1,6 +1,6 @@
 # BellaOS — Photo Video Bella
 
-BellaOS is the Next.js operations platform for CV Enterprise LLC. Sprint 1 establishes Supabase authentication, tenant-aware core data, and a protected executive dashboard.
+BellaOS is the Next.js operations platform for CV Enterprise LLC. The current foundation includes Supabase authentication, tenant-aware CRM, payments, and production tracking.
 
 ## Local setup
 
@@ -20,6 +20,7 @@ pnpm build
 
 See [docs/SPRINT_1_BELLAOS_CORE.md](docs/SPRINT_1_BELLAOS_CORE.md) for the security model and deployment checklist.
 See [docs/SPRINT_2_CRM.md](docs/SPRINT_2_CRM.md) for the Clients and Events model, RLS rules, and verification record.
+See [docs/SPRINT_3_OPERATIONS.md](docs/SPRINT_3_OPERATIONS.md) for payments, production tasks, and the event operations workflow.
 
 ## Supabase Auth configuration
 

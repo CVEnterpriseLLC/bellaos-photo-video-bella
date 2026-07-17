@@ -129,6 +129,10 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
                 <input id="packageName" name="packageName" />
               </div>
               <div className={styles.field}>
+                <label htmlFor="totalAmount">Total contratado</label>
+                <input id="totalAmount" name="totalAmount" type="number" min="0" step="0.01" defaultValue="0" />
+              </div>
+              <div className={styles.field}>
                 <label htmlFor="notes">Notas</label>
                 <textarea id="notes" name="notes" />
               </div>
@@ -149,7 +153,11 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
           <div className={styles.list}>
             {events?.length ? events.map((event) => (
               <article className={styles.event} key={event.id}>
-                <strong>{event.title || event.event_type}</strong>
+                <strong>
+                  <Link href={`/events/${event.id}`} className={styles.recordLink}>
+                    {event.title || event.event_type}
+                  </Link>
+                </strong>
                 <div className={styles.eventMeta}>
                   <span>{dateFormatter.format(new Date(`${event.event_date}T00:00:00Z`))}</span>
                   {event.start_time ? <span>{event.start_time.slice(0, 5)}</span> : null}

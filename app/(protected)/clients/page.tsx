@@ -54,6 +54,10 @@ export default async function ClientsPage({ searchParams }: { searchParams: Sear
                 </div>
               </div>
               <div className={styles.field}>
+                <label htmlFor="address">Dirección</label>
+                <input id="address" name="address" autoComplete="street-address" />
+              </div>
+              <div className={styles.field}>
                 <label htmlFor="email">Correo electrónico</label>
                 <input id="email" name="email" type="email" autoComplete="email" />
               </div>
@@ -101,7 +105,11 @@ export default async function ClientsPage({ searchParams }: { searchParams: Sear
           <div className={styles.list}>
             {clients?.length ? clients.map((client) => (
               <article className={styles.client} key={client.id}>
-                <strong>{client.first_name} {client.last_name ?? ""}</strong>
+                <strong>
+                  <Link href={`/clients/${client.id}`} className={styles.recordLink}>
+                    {client.first_name} {client.last_name ?? ""}
+                  </Link>
+                </strong>
                 <div className={styles.clientMeta}>
                   {client.email ? <span>{client.email}</span> : null}
                   {client.phone ? <span>{client.phone}</span> : null}

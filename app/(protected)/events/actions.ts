@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getCrmContext } from "@/lib/crm/context";
 import { parseEventInput } from "@/lib/crm/validation";
+import { parseMoney } from "@/lib/operations/validation";
 import { createClient as createSupabaseClient } from "@/lib/supabase/server";
 
 function returnToEvents(kind: "created" | "error", message?: string): never {
@@ -14,6 +15,8 @@ function returnToEvents(kind: "created" | "error", message?: string): never {
 export async function createEvent(formData: FormData) {
   const parsed = parseEventInput(formData);
   if (!parsed.success) returnToEvents("error", parsed.message);
+  const totalAmount = parseMoney(formData.get("totalAmount"));
+  if (!totalAmount.success) returnToEvents("error", totalAmount.message);
 
   const supabase = await createSupabaseClient();
   const context = await getCrmContext(supabase);
@@ -34,6 +37,7 @@ export async function createEvent(formData: FormData) {
     package_name: parsed.data.packageName,
     status: parsed.data.status,
     notes: parsed.data.notes,
+    total_amount: totalAmount.data,
   });
 
   if (error) returnToEvents("error", "No pudimos guardar el evento.");

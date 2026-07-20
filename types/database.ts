@@ -117,6 +117,68 @@ export type Database = {
           },
         ]
       }
+      client_portal_memberships: {
+        Row: {
+          brand_id: string
+          client_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          relationship: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          brand_id: string
+          client_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          relationship?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          brand_id?: string
+          client_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          relationship?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_portal_memberships_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_portal_memberships_client_brand_fkey"
+            columns: ["client_id", "brand_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id", "brand_id"]
+          },
+          {
+            foreignKeyName: "client_portal_memberships_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_portal_memberships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           created_at: string | null
@@ -294,6 +356,7 @@ export type Database = {
           sort_order: number
           title: string
           updated_at: string
+          visible_to_client: boolean
         }
         Insert: {
           brand_id: string
@@ -308,6 +371,7 @@ export type Database = {
           sort_order?: number
           title: string
           updated_at?: string
+          visible_to_client?: boolean
         }
         Update: {
           brand_id?: string
@@ -322,6 +386,7 @@ export type Database = {
           sort_order?: number
           title?: string
           updated_at?: string
+          visible_to_client?: boolean
         }
         Relationships: [
           {
@@ -424,7 +489,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_user_brand_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      current_user_role_slug: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

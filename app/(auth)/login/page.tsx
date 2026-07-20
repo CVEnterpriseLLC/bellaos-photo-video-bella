@@ -40,7 +40,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <p className={styles.eyebrow}>CV Enterprise LLC</p>
         <h1 id="login-title">Inicia sesión</h1>
         <p className={styles.description}>
-          Acceso privado para el equipo de Photo Video Bella.
+          Acceso privado para el equipo y los clientes de Photo Video Bella.
         </p>
 
         {!configured ? (

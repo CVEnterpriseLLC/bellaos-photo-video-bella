@@ -1,0 +1,327 @@
+.page {
+  min-height: 100vh;
+  padding: 2rem clamp(1rem, 4vw, 4rem) 3rem;
+  color: #241f18;
+  background:
+    radial-gradient(circle at 90% 4%, rgba(193, 148, 62, 0.18), transparent 25rem),
+    #f5f0e7;
+}
+
+.header,
+.hero,
+.eventHero,
+.summaryGrid,
+.columns,
+.otherEvents,
+.emptyState,
+.footer {
+  width: min(100%, 74rem);
+  margin-inline: auto;
+}
+
+.header,
+.eventHero,
+.panelHeading,
+.eventRow,
+.payments article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: inline-flex;
+  gap: 0.5rem;
+  color: inherit;
+  font-size: 1.25rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.brand span,
+.eyebrow {
+  color: #9b6b22;
+}
+
+.signOut {
+  border: 1px solid #d3c7b5;
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.55);
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.brand:focus-visible,
+.signOut:focus-visible {
+  outline: 3px solid rgba(155, 107, 34, 0.35);
+  outline-offset: 3px;
+}
+
+.hero {
+  padding: clamp(4rem, 9vw, 7.5rem) 0 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.hero > p:last-child {
+  max-width: 42rem;
+  margin-top: 1.3rem;
+  color: #716858;
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.eventHero,
+.panel,
+.otherEvents,
+.emptyState {
+  border: 1px solid #ded3c3;
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 24px 60px rgba(72, 54, 27, 0.08);
+}
+
+.eventHero {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.eventHero h2,
+.panel h2,
+.otherEvents h2,
+.emptyState h2 {
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.eventHero h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.eventDate {
+  margin: 0.75rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+.location,
+.muted,
+.footer,
+.eventRow span,
+.payments span,
+.payments time,
+.step small,
+.stepDone small {
+  color: #756b5b;
+}
+
+.location {
+  margin: 0.3rem 0 0;
+}
+
+.status {
+  flex: 0 0 auto;
+  border: 1px solid #dac494;
+  border-radius: 999px;
+  padding: 0.48rem 0.75rem;
+  color: #805619;
+  background: #fff7e6;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.summaryGrid article {
+  display: grid;
+  gap: 0.8rem;
+  min-height: 8.5rem;
+  border: 1px solid #ded3c3;
+  border-radius: 1rem;
+  padding: 1.1rem;
+  background: #fff;
+}
+
+.summaryGrid span {
+  color: #756b5b;
+  font-size: 0.78rem;
+}
+
+.summaryGrid strong {
+  align-self: end;
+  font-size: 1.25rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.panel,
+.otherEvents,
+.emptyState {
+  padding: clamp(1.35rem, 3vw, 2rem);
+}
+
+.panelHeading > strong {
+  font-size: 1.5rem;
+}
+
+.progressTrack {
+  height: 0.55rem;
+  margin: 1.3rem 0 1.5rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #ebe3d7;
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #bd8430, #e3c171);
+}
+
+.timeline,
+.payments,
+.eventList {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.step,
+.stepDone {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-top: 1px solid #e7ded1;
+}
+
+.step > span,
+.stepDone > span {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid #d8cbb8;
+  border-radius: 50%;
+  color: #fff;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.stepDone > span {
+  border-color: #a6752c;
+  background: #a6752c;
+}
+
+.step div,
+.stepDone div,
+.payments article > div,
+.eventRow > div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.step small,
+.stepDone small,
+.payments span,
+.payments time,
+.eventRow span {
+  font-size: 0.78rem;
+}
+
+.payments article,
+.eventRow {
+  padding: 0.85rem 0;
+  border-top: 1px solid #e7ded1;
+}
+
+.otherEvents {
+  margin-top: 1rem;
+}
+
+.eventList {
+  margin-top: 1rem;
+}
+
+.emptyState {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.emptyState > span {
+  color: #a6752c;
+  font-size: 1.5rem;
+}
+
+.emptyState p {
+  margin-bottom: 0;
+  color: #756b5b;
+  line-height: 1.6;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #ded3c3;
+  font-size: 0.82rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+@media (max-width: 52rem) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 36rem) {
+  .eventHero,
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+}

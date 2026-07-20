@@ -155,9 +155,11 @@ export type Database = {
           id: string
           notes: string | null
           package_name: string | null
+          production_status: string
           start_time: string | null
           status: string
           title: string | null
+          total_amount: number
           updated_at: string
           venue: string | null
         }
@@ -171,9 +173,11 @@ export type Database = {
           id?: string
           notes?: string | null
           package_name?: string | null
+          production_status?: string
           start_time?: string | null
           status?: string
           title?: string | null
+          total_amount?: number
           updated_at?: string
           venue?: string | null
         }
@@ -187,9 +191,11 @@ export type Database = {
           id?: string
           notes?: string | null
           package_name?: string | null
+          production_status?: string
           start_time?: string | null
           status?: string
           title?: string | null
+          total_amount?: number
           updated_at?: string
           venue?: string | null
         }
@@ -207,6 +213,137 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "clients"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          brand_id: string
+          created_at: string
+          created_by: string | null
+          event_id: string
+          id: string
+          method: string
+          notes: string | null
+          payment_date: string
+          reference: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          brand_id: string
+          created_at?: string
+          created_by?: string | null
+          event_id: string
+          id?: string
+          method?: string
+          notes?: string | null
+          payment_date?: string
+          reference?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          brand_id?: string
+          created_at?: string
+          created_by?: string | null
+          event_id?: string
+          id?: string
+          method?: string
+          notes?: string | null
+          payment_date?: string
+          reference?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_event_brand_fkey"
+            columns: ["event_id", "brand_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id", "brand_id"]
+          },
+        ]
+      }
+      production_tasks: {
+        Row: {
+          brand_id: string
+          category: string
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          due_date: string | null
+          event_id: string
+          id: string
+          is_completed: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          category?: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          due_date?: string | null
+          event_id: string
+          id?: string
+          is_completed?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          category?: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          due_date?: string | null
+          event_id?: string
+          id?: string
+          is_completed?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "production_tasks_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "production_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "production_tasks_event_brand_fkey"
+            columns: ["event_id", "brand_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id", "brand_id"]
           },
         ]
       }

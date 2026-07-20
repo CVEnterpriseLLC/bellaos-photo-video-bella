@@ -28,6 +28,7 @@ export async function createClient(formData: FormData) {
     last_name: parsed.data.lastName,
     email: parsed.data.email,
     phone: parsed.data.phone,
+    address: parsed.data.address,
     city: parsed.data.city,
     preferred_language: parsed.data.preferredLanguage,
     referred_by: parsed.data.referredBy,

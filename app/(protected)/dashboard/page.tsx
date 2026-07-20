@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data }, { count: clientCount }, { count: eventCount }] = await Promise.all([
+  const [{ data }, { count: clientCount }, { count: eventCount }, { data: financials }, { count: pendingTasks }] = await Promise.all([
     supabase
       .from("profiles")
       .select("full_name,email,brands(name,companies(name)),roles(name)")
@@ -24,10 +24,17 @@ export default async function DashboardPage() {
       .maybeSingle(),
     supabase.from("clients").select("id", { count: "exact", head: true }),
     supabase.from("events").select("id", { count: "exact", head: true }),
+    supabase.from("events").select("total_amount,payments(amount)"),
+    supabase.from("production_tasks").select("id", { count: "exact", head: true }).eq("is_completed", false),
   ]);
 
   const profile = data as Profile | null;
   const isAssigned = Boolean(profile?.brands && profile.roles);
+  const outstandingBalance = (financials ?? []).reduce((sum, event) => {
+    const paid = event.payments.reduce((paymentSum, payment) => paymentSum + Number(payment.amount), 0);
+    return sum + Math.max(Number(event.total_amount) - paid, 0);
+  }, 0);
+  const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   return (
     <main className={styles.page}>
@@ -50,7 +57,7 @@ export default async function DashboardPage() {
       </header>
 
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>BellaOS CRM · Sprint 2</p>
+        <p className={styles.eyebrow}>BellaOS Operaciones · Sprint 3</p>
         <h1>Hola, {profile?.full_name || user?.email || "equipo Bella"}</h1>
         <p>
           Tu sesión está protegida y conectada al núcleo multi-marca de CV Enterprise LLC.
@@ -87,12 +94,20 @@ export default async function DashboardPage() {
           <span>Eventos programados</span>
           <strong>{eventCount ?? 0}</strong>
         </article>
+        <article className={styles.card}>
+          <span>Saldo por cobrar</span>
+          <strong>{money.format(outstandingBalance)}</strong>
+        </article>
+        <article className={styles.card}>
+          <span>Tareas pendientes</span>
+          <strong>{pendingTasks ?? 0}</strong>
+        </article>
       </section>
 
       <section className={styles.foundation}>
         <div>
           <p className={styles.eyebrow}>CRM operativo</p>
-          <h2>Clientes y eventos en una sola plataforma</h2>
+          <h2>Del contrato a la entrega en una sola plataforma</h2>
         </div>
         <ul>
           <li>Sesiones SSR con Supabase Auth</li>
@@ -100,6 +115,8 @@ export default async function DashboardPage() {
           <li>Empresas, marcas, perfiles y roles con RLS</li>
           <li>Directorio de clientes aislado por marca</li>
           <li>Agenda de eventos vinculada a cada cliente</li>
+          <li>Pagos, saldos y métodos de cobro por evento</li>
+          <li>Checklist automático de producción y entrega</li>
           <li>Sin claves privadas en el navegador</li>
         </ul>
       </section>

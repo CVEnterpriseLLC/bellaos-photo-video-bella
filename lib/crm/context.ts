@@ -2,6 +2,13 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database";
 
 const CRM_WRITE_ROLES = new Set(["owner", "administrator", "sales"]);
+const PRODUCTION_WRITE_ROLES = new Set([
+  "owner",
+  "administrator",
+  "photographer",
+  "videographer",
+  "editor",
+]);
 
 type ProfileContext = {
   brand_id: string | null;
@@ -29,5 +36,7 @@ export async function getCrmContext(supabase: SupabaseClient<Database>) {
     brandId: profile.brand_id,
     role: profile.roles?.slug ?? null,
     canManage: CRM_WRITE_ROLES.has(profile.roles?.slug ?? ""),
+    canManagePayments: CRM_WRITE_ROLES.has(profile.roles?.slug ?? ""),
+    canManageProduction: PRODUCTION_WRITE_ROLES.has(profile.roles?.slug ?? ""),
   };
 }

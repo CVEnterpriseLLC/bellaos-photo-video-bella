@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseClientInput, parseEventInput } from "./validation";
+import { parseClientInput, parseClientUpdateInput, parseEventInput } from "./validation";
 
 describe("parseClientInput", () => {
   it("normalizes a valid client", () => {
@@ -15,11 +15,23 @@ describe("parseClientInput", () => {
         lastName: null,
         email: "ashley@example.com",
         phone: null,
+        address: null,
         city: null,
         preferredLanguage: "es",
         referredBy: null,
         notes: null,
       },
+    });
+  });
+
+  it("validates an editable client status", () => {
+    const formData = new FormData();
+    formData.set("firstName", "Ashley");
+    formData.set("status", "active");
+
+    expect(parseClientUpdateInput(formData)).toMatchObject({
+      success: true,
+      data: { firstName: "Ashley", status: "active" },
     });
   });
 

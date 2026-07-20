@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "../actions";
 import styles from "./dashboard.module.css";
@@ -7,7 +8,7 @@ type Profile = {
   full_name: string | null;
   email: string | null;
   brands: { name: string; companies: { name: string } | null } | null;
-  roles: { name: string } | null;
+  roles: { name: string; slug: string } | null;
 };
 
 export default async function DashboardPage() {
@@ -16,19 +17,22 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data }, { count: clientCount }, { count: eventCount }, { data: financials }, { count: pendingTasks }] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("full_name,email,brands(name,companies(name)),roles(name)")
-      .eq("id", user!.id)
-      .maybeSingle(),
+  const { data } = await supabase
+    .from("profiles")
+    .select("full_name,email,brands(name,companies(name)),roles(name,slug)")
+    .eq("id", user!.id)
+    .maybeSingle();
+
+  const profile = data as Profile | null;
+  if (profile?.roles?.slug === "client") redirect("/portal");
+
+  const [{ count: clientCount }, { count: eventCount }, { data: financials }, { count: pendingTasks }] = await Promise.all([
     supabase.from("clients").select("id", { count: "exact", head: true }),
     supabase.from("events").select("id", { count: "exact", head: true }),
     supabase.from("events").select("total_amount,payments(amount)"),
     supabase.from("production_tasks").select("id", { count: "exact", head: true }).eq("is_completed", false),
   ]);
 
-  const profile = data as Profile | null;
   const isAssigned = Boolean(profile?.brands && profile.roles);
   const outstandingBalance = (financials ?? []).reduce((sum, event) => {
     const paid = event.payments.reduce((paymentSum, payment) => paymentSum + Number(payment.amount), 0);
@@ -48,6 +52,7 @@ export default async function DashboardPage() {
         <div className={styles.headerActions}>
           <Link href="/clients" className={styles.navLink}>Clientes</Link>
           <Link href="/events" className={styles.navLink}>Eventos</Link>
+          <Link href="/portal-access" className={styles.navLink}>Portal</Link>
           <form action={signOut}>
             <button type="submit" className={styles.signOut}>
               Cerrar sesión

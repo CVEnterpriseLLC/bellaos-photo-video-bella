@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCrmContext } from "@/lib/crm/context";
 import { createClient } from "@/lib/supabase/server";
-import { addPayment, addProductionTask, toggleProductionTask, updateEvent } from "./actions";
+import { addPayment, addProductionTask, toggleProductionTask, updateEvent, updatePicflowGallery } from "./actions";
 import styles from "../../crm.module.css";
 
 type Params = Promise<{ id: string }>;
-type SearchParams = Promise<{ updated?: string; payment?: string; task?: string; error?: string }>;
+type SearchParams = Promise<{ updated?: string; payment?: string; task?: string; gallery?: string; error?: string }>;
 
 type EventDetail = {
   id: string;
@@ -21,6 +21,8 @@ type EventDetail = {
   total_amount: number;
   status: string;
   production_status: string;
+  picflow_gallery_url: string | null;
+  gallery_status: string;
   notes: string | null;
   clients: { first_name: string; last_name: string | null } | null;
 };
@@ -32,6 +34,9 @@ const paymentMethods: Record<string, string> = {
 };
 const categoryLabels: Record<string, string> = {
   planning: "Planeación", capture: "Evento", postproduction: "Postproducción", delivery: "Entrega",
+};
+const galleryLabels: Record<string, string> = {
+  preparing: "Preparando", proofing: "En revisión", delivered: "Entregada",
 };
 
 export default async function EventDetailPage({ params, searchParams }: { params: Params; searchParams: SearchParams }) {
@@ -54,6 +59,7 @@ export default async function EventDetailPage({ params, searchParams }: { params
   const updateAction = updateEvent.bind(null, event.id);
   const paymentAction = addPayment.bind(null, event.id);
   const taskAction = addProductionTask.bind(null, event.id);
+  const galleryAction = updatePicflowGallery.bind(null, event.id);
   const today = new Date().toISOString().slice(0, 10);
 
   return (
@@ -74,6 +80,7 @@ export default async function EventDetailPage({ params, searchParams }: { params
       {query.updated ? <p className={styles.notice} role="status">Evento actualizado correctamente.</p> : null}
       {query.payment ? <p className={styles.notice} role="status">Pago registrado correctamente.</p> : null}
       {query.task ? <p className={styles.notice} role="status">Checklist actualizado.</p> : null}
+      {query.gallery ? <p className={styles.notice} role="status">Galería de Picflow actualizada.</p> : null}
       {query.error ? <p className={styles.error} role="alert">{query.error}</p> : null}
 
       <section className={styles.summaryGrid} aria-label="Resumen financiero y de producción">
@@ -116,6 +123,40 @@ export default async function EventDetailPage({ params, searchParams }: { params
         </section>
 
         <div className={styles.stack}>
+          <section className={styles.panel} aria-labelledby="gallery-title">
+            <p className={styles.eyebrow}>Entrega digital</p><h2 id="gallery-title">Galería Picflow</h2>
+            {context?.canManage ? (
+              <form action={galleryAction} className={styles.form}>
+                <div className={styles.field}>
+                  <label htmlFor="picflowGalleryUrl">Enlace de la galería</label>
+                  <input
+                    id="picflowGalleryUrl"
+                    name="picflowGalleryUrl"
+                    type="url"
+                    inputMode="url"
+                    placeholder="https://galleryphotovideobella.com/..."
+                    defaultValue={event.picflow_gallery_url ?? ""}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="galleryStatus">Estado</label>
+                  <select id="galleryStatus" name="galleryStatus" defaultValue={event.gallery_status}>
+                    <option value="preparing">Preparando</option>
+                    <option value="proofing">En revisión</option>
+                    <option value="delivered">Entregada</option>
+                  </select>
+                </div>
+                <button type="submit" className={styles.submit}>{event.picflow_gallery_url ? "Actualizar galería" : "Vincular galería"}</button>
+              </form>
+            ) : null}
+            {event.picflow_gallery_url ? (
+              <div className={styles.gallerySummary}>
+                <span className={styles.status}>{galleryLabels[event.gallery_status] ?? event.gallery_status}</span>
+                <a className={styles.secondaryButton} href={event.picflow_gallery_url} target="_blank" rel="noopener noreferrer">Abrir galería ↗</a>
+              </div>
+            ) : <p className={styles.empty}>Pega el enlace compartido de Picflow para mostrarlo en el portal del cliente.</p>}
+          </section>
+
           <section className={styles.panel} aria-labelledby="payments-title">
             <p className={styles.eyebrow}>Finanzas</p><h2 id="payments-title">Pagos</h2>
             {context?.canManagePayments ? (

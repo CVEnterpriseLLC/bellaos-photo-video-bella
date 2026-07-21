@@ -32,6 +32,8 @@ type PortalEvent = {
   total_amount: number;
   status: string;
   production_status: string;
+  picflow_gallery_url: string | null;
+  gallery_status: string;
   payments: Array<{
     amount: number;
     payment_date: string;
@@ -104,7 +106,7 @@ export default async function ClientPortalPage() {
     ? await supabase
         .from("events")
         .select(
-          "id,title,event_type,event_date,start_time,venue,city,package_name,total_amount,status,production_status,payments(amount,payment_date,method),production_tasks(id,title,category,is_completed,sort_order)",
+          "id,title,event_type,event_date,start_time,venue,city,package_name,total_amount,status,production_status,picflow_gallery_url,gallery_status,payments(amount,payment_date,method),production_tasks(id,title,category,is_completed,sort_order)",
         )
         .eq("client_id", membership.client_id)
         .order("event_date", { ascending: true })
@@ -200,6 +202,19 @@ function EventOverview({ event }: { event: PortalEvent }) {
         <article><span>Pagado</span><strong>{money.format(paid)}</strong></article>
         <article><span>Saldo</span><strong>{money.format(balance)}</strong></article>
       </section>
+
+      {event.picflow_gallery_url ? (
+        <section className={styles.galleryCard} aria-labelledby="gallery-title">
+          <div>
+            <p className={styles.eyebrow}>Entrega de fotografías</p>
+            <h2 id="gallery-title">Tu galería está disponible</h2>
+            <p>Abre Picflow para revisar, seleccionar o descargar tus fotografías.</p>
+          </div>
+          <a href={event.picflow_gallery_url} target="_blank" rel="noopener noreferrer" className={styles.galleryButton}>
+            Ver mi galería ↗
+          </a>
+        </section>
+      ) : null}
 
       <div className={styles.columns}>
         <section className={styles.panel} aria-labelledby="progress-title">

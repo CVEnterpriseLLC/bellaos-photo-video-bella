@@ -214,9 +214,12 @@ export type Database = {
           created_at: string
           event_date: string
           event_type: string
+          gallery_status: string
+          gallery_updated_at: string | null
           id: string
           notes: string | null
           package_name: string | null
+          picflow_gallery_url: string | null
           production_status: string
           start_time: string | null
           status: string
@@ -232,9 +235,12 @@ export type Database = {
           created_at?: string
           event_date: string
           event_type: string
+          gallery_status?: string
+          gallery_updated_at?: string | null
           id?: string
           notes?: string | null
           package_name?: string | null
+          picflow_gallery_url?: string | null
           production_status?: string
           start_time?: string | null
           status?: string
@@ -250,9 +256,12 @@ export type Database = {
           created_at?: string
           event_date?: string
           event_type?: string
+          gallery_status?: string
+          gallery_updated_at?: string | null
           id?: string
           notes?: string | null
           package_name?: string | null
+          picflow_gallery_url?: string | null
           production_status?: string
           start_time?: string | null
           status?: string

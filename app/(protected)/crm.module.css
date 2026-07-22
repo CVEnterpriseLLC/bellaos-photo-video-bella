@@ -227,6 +227,18 @@
   white-space: nowrap;
 }
 
+.gallerySummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.gallerySummary .secondaryButton {
+  text-decoration: none;
+}
+
 .notice,
 .error {
   border-radius: 0.8rem;
@@ -388,7 +400,8 @@
   }
 
   .payment,
-  .task {
+  .task,
+  .gallerySummary {
     align-items: flex-start;
     flex-direction: column;
   }

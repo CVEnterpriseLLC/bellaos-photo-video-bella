@@ -11,9 +11,10 @@
 .hero,
 .eventHero,
 .summaryGrid,
-.columns,
-.otherEvents,
-.emptyState,
+  .columns,
+  .otherEvents,
+  .galleryCard,
+  .emptyState,
 .footer {
   width: min(100%, 74rem);
   margin-inline: auto;
@@ -93,6 +94,7 @@
 .eventHero,
 .panel,
 .otherEvents,
+.galleryCard,
 .emptyState {
   border: 1px solid #ded3c3;
   border-radius: 1.4rem;
@@ -184,8 +186,44 @@
 
 .panel,
 .otherEvents,
+.galleryCard,
 .emptyState {
   padding: clamp(1.35rem, 3vw, 2rem);
+}
+
+.galleryCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #fff, #f6e8c7);
+}
+
+.galleryCard h2,
+.galleryCard p {
+  margin: 0;
+}
+
+.galleryCard p:last-child {
+  margin-top: 0.55rem;
+  color: #756b5b;
+}
+
+.galleryButton {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 0.9rem 1.2rem;
+  color: #fff;
+  background: #8b5b18;
+  font-weight: 850;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(139, 91, 24, 0.2);
+}
+
+.galleryButton:focus-visible {
+  outline: 3px solid rgba(155, 107, 34, 0.35);
+  outline-offset: 3px;
 }
 
 .panelHeading > strong {
@@ -316,6 +354,7 @@
 
 @media (max-width: 36rem) {
   .eventHero,
+  .galleryCard,
   .footer {
     align-items: flex-start;
     flex-direction: column;

@@ -5,9 +5,10 @@ import { redirect } from "next/navigation";
 import { getCrmContext } from "@/lib/crm/context";
 import { parseEventInput } from "@/lib/crm/validation";
 import { parseMoney, parsePaymentInput, parseProductionTaskInput } from "@/lib/operations/validation";
+import { parsePicflowGalleryInput } from "@/lib/picflow/validation";
 import { createClient } from "@/lib/supabase/server";
 
-type ResultKind = "updated" | "payment" | "task" | "error";
+type ResultKind = "updated" | "payment" | "task" | "gallery" | "error";
 
 function returnToEvent(id: string, kind: ResultKind, message?: string): never {
   const query = message ? `?${kind}=${encodeURIComponent(message)}` : `?${kind}=1`;
@@ -18,6 +19,30 @@ function revalidateEvent(id: string) {
   revalidatePath(`/events/${id}`);
   revalidatePath("/events");
   revalidatePath("/dashboard");
+  revalidatePath("/portal");
+}
+
+export async function updatePicflowGallery(id: string, formData: FormData) {
+  const parsed = parsePicflowGalleryInput(formData);
+  if (!parsed.success) returnToEvent(id, "error", parsed.message);
+
+  const supabase = await createClient();
+  const context = await getCrmContext(supabase);
+  if (!context?.canManage) returnToEvent(id, "error", "Tu rol no permite vincular galerías.");
+
+  const { error } = await supabase
+    .from("events")
+    .update({
+      picflow_gallery_url: parsed.data.url,
+      gallery_status: parsed.data.status,
+      gallery_updated_at: new Date().toISOString(),
+    })
+    .eq("id", id)
+    .eq("brand_id", context.brandId);
+
+  if (error) returnToEvent(id, "error", "No pudimos vincular la galería de Picflow.");
+  revalidateEvent(id);
+  returnToEvent(id, "gallery");
 }
 
 export async function updateEvent(id: string, formData: FormData) {
